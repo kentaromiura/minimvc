@@ -1,0 +1,24 @@
+{
+  "name": "minimvc",
+  "version": "1.0.0",
+  "description": "Mini MVC Helper",
+  "main": "index.js",
+  "author": "Cristian Carlesso <@kentaromiura>",
+  "license": "MIT",
+  "scripts": {
+    "clean-build": "rm -Rf build && mkdir build",
+    "create-helpers": "./node_modules/.bin/babel-external-helpers -t var -l inherits -l classCallCheck -l possibleConstructorReturn -l getPrototypeOf -l createClass -l assertThisInitialized -l wrapNativeSuper -l isNativeFunction -l setPrototypeOf -l construct -l objectSpread -l defineProperty>helpers.js",
+    "build-test": "yarn clean-build && yarn create-helpers && yarn wrup browser -r ./test.js -t ./babel-plug.js --output build/test.js && ex -c '0r ./helpers.js|x' build/test.js",
+    "build-test-compressed": "yarn build-test && yarn terser build/test.js -c -m toplevel --mangle-props 'keep_quoted,reserved=[wire,unwire,trigger,configurable,writable,value,handleEvent,increment,notify]' -o build/test.min.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-transform-classes": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "prettier": "^1.16.4",
+    "terser": "^3.16.1",
+    "wrapup": "^1.0.7"
+  }
+}
